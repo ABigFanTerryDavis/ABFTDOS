@@ -1,0 +1,5 @@
+#!/system/bin/sh
+# ABFTDOS terrydavis daemon - performance & system services
+log -t terrydavis "Started"
+echo 1 > /sys/devices/system/cpu/cpu0/online 2>/dev/null || true
+log -t terrydavis "Performance tweaks applied"
