@@ -5,13 +5,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y wget unzip simg2img python3
       - name: Download LineageOS 21 (Android 14) base
-        run: echo "Download pre-built ROM image"
+        run: wget -O rom.zip "https://download.lineageos.org/lineage-21.0-20241024-nightly-zip.zip" || echo "Download placeholder - replace URL"
+      - name: Unzip ROM
+        run: unzip -o rom.zip -d rom/
       - name: Unpack system.img, inject ABFTDOS, strip GApps (privacy)
-        run: echo "Strip GMS/Gmail/privacy apps, inject terrydavis daemon, keep Play Store + YouTube"
+        run: |
+          simg2img rom/system.img rom/system_raw.img
+          mkdir -p mnt
+          sudo mount -o loop rom/system_raw.img mnt/
+          sudo rm -f mnt/app/*Gmail* mnt/app/*GoogleServices* || true
+          sudo cp terrydavis mnt/system/bin/terrydavis
+          sudo cp init.rc-terrydavis mnt/system/etc/init/terrydavis.rc
+          sudo chmod 755 mnt/system/bin/terrydavis
+          sudo umount mnt/
       - name: Repack ABFTDOS ROM
-        run: echo "Repack and sign ROM zip"
+        run: |
+          img2simg rom/system_raw.img rom/system_new.img
+          cd rom && zip -r ../ABFTDOS-ROM.zip .
       - uses: actions/upload-artifact@v4
         with:
           name: ABFTDOS-ROM
-          path: out/ABFTDOS-ROM.zip
+          path: ABFTDOS-ROM.zip
