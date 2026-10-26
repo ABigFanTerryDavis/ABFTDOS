@@ -9,7 +9,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y wget unzip python3 android-sdk-libsparse-utils
       - name: Download LineageOS 21 (Android 14) base
         run: |
-          wget -O rom.zip "https://download.lineageos.org/lineage-21.0-20241024-nightly-zip.zip" || true
+          wget -O rom.zip "https://mirrorbits.lineageos.org/full/frankel/20261019/lineage-24.0-20261019-nightly-frankel-signed.zip"
           if [ ! -f rom.zip ] || [ ! -s rom.zip ]; then
             echo "Using dummy rom for build demo"
             mkdir -p rom
