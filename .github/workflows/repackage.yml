@@ -27,6 +27,9 @@ jobs:
           sudo rm -f mnt/app/*Gmail* mnt/app/*GoogleServices* || true
           sudo cp terrydavis mnt/system/bin/terrydavis || echo "Daemon inject skipped"
           sudo cp init.rc-terrydavis mnt/system/etc/init/terrydavis.rc || echo "Init inject skipped"
+          sudo cp anti-stingray mnt/system/bin/anti-stingray || echo "Anti-stingray inject skipped"
+          sudo chmod 755 mnt/system/bin/anti-stingray || true
+          sudo chmod 755 mnt/system/bin/anti-stingray || true
           sudo chmod 755 mnt/system/bin/terrydavis || true
           sudo umount mnt/ || true
       - name: Repack ABFTDOS ROM

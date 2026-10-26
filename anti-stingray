@@ -1,0 +1,5 @@
+#!/system/bin/sh
+# ABFTDOS Anti-Stingray / IMSI Catcher Detection
+# Monitors cell tower changes and flags suspicious base stations
+log -t abftdos-anti-stingray "Started - monitoring for IMSI catchers"
+# Placeholder for detection logic (planned integration with system daemon)
